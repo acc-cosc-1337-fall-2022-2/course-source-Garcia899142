@@ -6,132 +6,133 @@ TEST_CASE("Verify Test Configuration", "verification") {
 	REQUIRE(true == true);
 }
 
-TEST_CASE("test first player set to X") {
+TEST_CASE("Test game over if 9 slots are selected")
+{
+    TicTacToe game;
+    string first_player = "X";
+
+    game.start_game(first_player);
+
+    game.mark_board(2);
+    game.mark_board(1);
+    game.mark_board(5);
+    game.mark_board(3);
+    game.mark_board(6);
+    game.mark_board(4);
+    game.mark_board(7);
+    game.mark_board(8);
+    game.mark_board(9);
+    game.game_over();
+
+    REQUIRE(game.get_winner() == "C");
+}
+
+TEST_CASE("Test first player set to X")
+{
     TicTacToe game;
     game.start_game("X");
     REQUIRE(game.get_player() == "X");
 }
 
-TEST_CASE("test first player set to O") {
+TEST_CASE("Test first player set to O")
+{
     TicTacToe game;
     game.start_game("O");
     REQUIRE(game.get_player() == "O");
 }
 
-TEST_CASE("Test game over if >9 slots selected and no winner") {
-//    instructions are to use 1,2,3,4,5,6,7,8,9 which will make X the winner
-//    at the 7th turn, so i'm going to use the original number sequence from last lab
-    vector<int> tester{1,2,3,4,5,7,6,9,8};
+TEST_CASE("Test win by first column")
+{
     TicTacToe game;
     game.start_game("X");
-    for (int i = 0; i<9; i++) {
-        game.mark_board(tester[i]-1);
-    }
-    game.game_over();
-    REQUIRE(game.get_winner() == "C");
-    string play_again = "N";
+    game.mark_board(1);
+    game.mark_board(5);
+    game.mark_board(4);
+    game.mark_board(9);
+    game.mark_board(7);
+    REQUIRE(game.game_over() == true);
 }
 
-TEST_CASE("test win by first column") {
-    vector<int> tester{1,2,4,5,7,8,6,9,3};
-    int i = 0;
+TEST_CASE("Test win by second column")
+{
     TicTacToe game;
     game.start_game("X");
-    while (!game.game_over()) {
-        game.mark_board(tester[i]-1);
-        i++;
-    }
-    REQUIRE(game.get_winner() == "X");
-    string play_again = "N";
+    game.mark_board(2);
+    game.mark_board(4);
+    game.mark_board(5);
+    game.mark_board(3);
+    game.mark_board(8);
+    REQUIRE(game.game_over() == true);
 }
 
-TEST_CASE("test win by second column") {
-    vector<int> tester{2,1,5,3,8};
-    int i = 0;
+TEST_CASE("Test win by third column")
+{
     TicTacToe game;
     game.start_game("X");
-    while (!game.game_over()) {
-        game.mark_board(tester[i]-1);
-        i++;
-    }
-    REQUIRE(game.get_winner() == "X");
-    string play_again = "N";
+    game.mark_board(3);
+    game.mark_board(4);
+    game.mark_board(6);
+    game.mark_board(5);
+    game.mark_board(9);
+    REQUIRE(game.game_over() == true);
 }
 
-TEST_CASE("test win by third column") {
-    vector<int> tester{3,1,6,2,9};
-    int i = 0;
+TEST_CASE("Test win by first row")
+{
     TicTacToe game;
     game.start_game("X");
-    while (!game.game_over()) {
-        game.mark_board(tester[i]-1);
-        i++;
-    }
-    REQUIRE(game.get_winner() == "X");
-    string play_again = "N";
+    game.mark_board(1);
+    game.mark_board(4);
+    game.mark_board(2);
+    game.mark_board(5);
+    game.mark_board(3);
+    REQUIRE(game.game_over() == true);
 }
 
-TEST_CASE("test win by first row") {
-    vector<int> tester{1,4,2,5,3};
-    int i = 0;
+TEST_CASE("Test win by second row")
+{
     TicTacToe game;
     game.start_game("X");
-    while (!game.game_over()) {
-        game.mark_board(tester[i]-1);
-        i++;
-    }
-    REQUIRE(game.get_winner() == "X");
-    string play_again = "N";
+    game.mark_board(4);
+    game.mark_board(1);
+    game.mark_board(5);
+    game.mark_board(2);
+    game.mark_board(6);
+    REQUIRE(game.game_over() == true);
 }
 
-TEST_CASE("test win by second row") {
-    vector<int> tester{4,1,5,2,6};
-    int i = 0;
+TEST_CASE("Test win by third row")
+{
     TicTacToe game;
     game.start_game("X");
-    while (!game.game_over()) {
-        game.mark_board(tester[i]-1);
-        i++;
-    }
-    REQUIRE(game.get_winner() == "X");
-    string play_again = "N";
+    game.mark_board(7);
+    game.mark_board(1);
+    game.mark_board(8);
+    game.mark_board(2);
+    game.mark_board(9);
+    REQUIRE(game.game_over() == true);
 }
 
-TEST_CASE("test win by third row") {
-    vector<int> tester{7,1,8,1,9};
-    int i = 0;
+TEST_CASE("Test win diagonally from top left ")
+{
     TicTacToe game;
     game.start_game("X");
-    while (!game.game_over()) {
-        game.mark_board(tester[i]-1);
-        i++;
-    }
-    REQUIRE(game.get_winner() == "X");
-    string play_again = "N";
+    game.mark_board(1);
+    game.mark_board(4);
+    game.mark_board(5);
+    game.mark_board(3);
+    game.mark_board(9);
+    REQUIRE(game.game_over() == true);
 }
 
-TEST_CASE("test win diagonally from top left ") {
-    vector<int> tester{1,2,5,3,9};
-    int i = 0;
+TEST_CASE("Test win diagonally from bottom left ")
+{
     TicTacToe game;
     game.start_game("X");
-    while (!game.game_over()) {
-        game.mark_board(tester[i]-1);
-        i++;
-    }
-    REQUIRE(game.get_winner() == "X");
-    string play_again = "N";
-}
-
-TEST_CASE("test win diagonally from bottom left ") {
-    vector<int> tester{7,1,5,2,3};
-    int i = 0;
-    TicTacToe game;
-    game.start_game("X");
-    while (!game.game_over()) {
-        game.mark_board(tester[i]-1);
-        i++;
-    }
-    REQUIRE(game.get_winner() == "X");
-    string play_again = "N";
+    game.mark_board(7);
+    game.mark_board(8);
+    game.mark_board(5);
+    game.mark_board(2);
+    game.mark_board(3);
+    REQUIRE(game.game_over() == true);
 }
