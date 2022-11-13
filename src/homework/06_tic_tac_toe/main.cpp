@@ -1,57 +1,71 @@
 #include "tic_tac_toe.h"
+#include "tic_tac_toe_manager.h"
 #include <iostream>
 
-using
-    std::cout,
-    std::count,
-    std::stoi,
-    std::cin;
+using std::cout;
+using std::cin;
 
 int main() 
 {
-    TicTacToe game;
+	//Var dec
 
-    string first_player;
-    int
-        position = 0,
-        selx = 0;
-    vector<int> pos{1, 2, 3, 4, 5, 6, 7, 8, 9};
+	TicTacToe game;
+	TicTacToeManager manager;
+	string first_player;
+	int gameloop = 0;
+	int reply = {0};
+	
+	cout << "\n\nWelcome to a game of Tic Tac Toe!\n\n";
+	cout << "Player 1 Pick your character! X or O\n";
+	cin >> first_player;
+	game.start_game(first_player);
+	
 
-    cout << "Tic Tac Toe\n";
-    cout << "Player 1: Choose X or O\n";
-    cin >> first_player;
-    game.start_game(first_player);
-    display_board_instructions();
-
-    while(selx == 0)
-    {
-        do
+	do
+	{
+		do
         {
-            cout << "Player \'" << game.get_player() << "\' take your turn (Choose position on board)\n";
-            game.display_board();
-            cin >> position;
-            game.mark_board(position);
+            cout << game;
+            cin >> game;
         }
         while(!game.game_over());
-
         game.game_over();
-        game.display_board();
-        if (game.get_winner() == "C")
-        {
-            cout << "\nThe game has ended in a tie! Settle the score and play again!\n";
-        }
-        else
-        {
-            cout << "\nPlayer " << game.get_winner() << " wins the game!\n";
-        }
+        cout << game;
+        manager.save_game(game);
+		
+		int o, x, t;
+        manager.get_winner_total(o, x, t);
+        cout << "\nO Wins: " << o << '\n';
+        cout << "X Wins: " << x << '\n';
+        cout << "Ties: " << t << '\n';
 
-        cout << "\nWould you like to play again?\nPress 0: Yes\nPress 1: No\n";
-        cin >> selx;
-        if(selx == 0)
-        {
-           game.start_game(first_player);
-        }
-    }
+		if( game.get_winner() == "X")
+		{
+			cout << "Player X wins!";
+		}
+		else if(game.get_winner() == "O")
+		{
+			cout << "Player O wins!";
+		}
+		else{cout << "Its a TIE!";}
 
-    return 0;
+		cout << "Press 1 to Continue or 0 to End game\n";
+		cin >> reply;
+
+		if(reply == 0)
+		{
+			cout << "Ending game\n";
+			gameloop = 1;
+		}
+		else
+		{
+			cout << "Starting another game\n";
+			game.start_game(first_player);
+			gameloop = 0;
+		}
+	}
+	while(gameloop == 0);
+	cout << manager;
+
+	return 0;
 }

@@ -1,31 +1,31 @@
-//h
 #include <iostream>
-#include <string>
 #include <vector>
-#include <algorithm>
+#include <string>
+
+using std::string;
+using std::vector;
+using std::ostream;
+using std::istream;
 
 #ifndef TicTacToe_H
 #define TicTacToe_H
 
-using
-    std::string,
-    std::vector;
-
 class TicTacToe
 {
+    vector<string> pegs {" ", " ", " ", " ", " ", " ", " ", " ", " ", }; 
+    string player;
+    string winner;
+
 public:
     bool game_over();
     void start_game(string first_player);
     void mark_board(int position);
     string get_player() const;
-    void display_board() const;
-    string get_winner(){return winner;};
+    string get_winner();
+    friend ostream& operator<<(ostream& out, const TicTacToe& game);
+    friend istream& operator>>(istream& in, TicTacToe& game);
 
 private:
-    vector<string> pegs{" ", " ", " ", " ", " ", " ", " ", " ", " "};
-    string player;
-    string winner;
-
     void set_next_player();
     bool check_board_full();
     void clear_board();
@@ -35,11 +35,4 @@ private:
     void set_winner();
 
 };
-
 #endif
-
-
-
-//////////////////EXTRA FUNCTIONS//////////////////////////
-
-void display_board_instructions();
